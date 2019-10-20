@@ -1,6 +1,9 @@
 package pointer
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func Test_Value(t *testing.T) {
 	type testCase struct {
@@ -44,7 +47,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return UintVal(ptr.(*uint))
 			},
-			input:  func() *uint { b := uint(42); return &b }(),
+			input:  func() *uint { u := uint(42); return &u }(),
 			output: uint(42),
 			valid:  true,
 		},
@@ -62,7 +65,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Uint8Val(ptr.(*uint8))
 			},
-			input:  func() *uint8 { b := uint8(42); return &b }(),
+			input:  func() *uint8 { u := uint8(42); return &u }(),
 			output: uint8(42),
 			valid:  true,
 		},
@@ -80,7 +83,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Uint16Val(ptr.(*uint16))
 			},
-			input:  func() *uint16 { b := uint16(42); return &b }(),
+			input:  func() *uint16 { u := uint16(42); return &u }(),
 			output: uint16(42),
 			valid:  true,
 		},
@@ -98,7 +101,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Uint32Val(ptr.(*uint32))
 			},
-			input:  func() *uint32 { b := uint32(42); return &b }(),
+			input:  func() *uint32 { u := uint32(42); return &u }(),
 			output: uint32(42),
 			valid:  true,
 		},
@@ -116,7 +119,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Uint64Val(ptr.(*uint64))
 			},
-			input:  func() *uint64 { b := uint64(42); return &b }(),
+			input:  func() *uint64 { u := uint64(42); return &u }(),
 			output: uint64(42),
 			valid:  true,
 		},
@@ -134,7 +137,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return UintptrVal(ptr.(*uintptr))
 			},
-			input:  func() *uintptr { b := uintptr(42); return &b }(),
+			input:  func() *uintptr { p := uintptr(42); return &p }(),
 			output: uintptr(42),
 			valid:  true,
 		},
@@ -152,7 +155,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return IntVal(ptr.(*int))
 			},
-			input:  func() *int { b := 42; return &b }(),
+			input:  func() *int { i := 42; return &i }(),
 			output: 42,
 			valid:  true,
 		},
@@ -170,7 +173,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Int8Val(ptr.(*int8))
 			},
-			input:  func() *int8 { b := int8(42); return &b }(),
+			input:  func() *int8 { i := int8(42); return &i }(),
 			output: int8(42),
 			valid:  true,
 		},
@@ -188,7 +191,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Int16Val(ptr.(*int16))
 			},
-			input:  func() *int16 { b := int16(42); return &b }(),
+			input:  func() *int16 { i := int16(42); return &i }(),
 			output: int16(42),
 			valid:  true,
 		},
@@ -206,7 +209,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Int32Val(ptr.(*int32))
 			},
-			input:  func() *int32 { b := int32(42); return &b }(),
+			input:  func() *int32 { i := int32(42); return &i }(),
 			output: int32(42),
 			valid:  true,
 		},
@@ -224,7 +227,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Int64Val(ptr.(*int64))
 			},
-			input:  func() *int64 { b := int64(42); return &b }(),
+			input:  func() *int64 { i := int64(42); return &i }(),
 			output: int64(42),
 			valid:  true,
 		},
@@ -242,7 +245,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Float32Val(ptr.(*float32))
 			},
-			input:  func() *float32 { b := float32(42); return &b }(),
+			input:  func() *float32 { f := float32(42); return &f }(),
 			output: float32(42),
 			valid:  true,
 		},
@@ -260,7 +263,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Float64Val(ptr.(*float64))
 			},
-			input:  func() *float64 { b := float64(42); return &b }(),
+			input:  func() *float64 { f := float64(42); return &f }(),
 			output: float64(42),
 			valid:  true,
 		},
@@ -278,7 +281,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return RuneVal(ptr.(*rune))
 			},
-			input:  func() *rune { b := rune(42); return &b }(),
+			input:  func() *rune { r := rune(42); return &r }(),
 			output: rune(42),
 			valid:  true,
 		},
@@ -314,7 +317,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return StringVal(ptr.(*string))
 			},
-			input:  func() *string { b := "42"; return &b }(),
+			input:  func() *string { s := "42"; return &s }(),
 			output: "42",
 			valid:  true,
 		},
@@ -332,7 +335,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Complex64Val(ptr.(*complex64))
 			},
-			input:  func() *complex64 { b := complex64(42); return &b }(),
+			input:  func() *complex64 { c := complex64(42); return &c }(),
 			output: complex64(42),
 			valid:  true,
 		},
@@ -350,7 +353,7 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return Complex128Val(ptr.(*complex128))
 			},
-			input:  func() *complex128 { b := complex128(42); return &b }(),
+			input:  func() *complex128 { c := complex128(42); return &c }(),
 			output: complex128(42),
 			valid:  true,
 		},
@@ -368,8 +371,44 @@ func Test_Value(t *testing.T) {
 			fn: func(ptr interface{}) (interface{}, bool) {
 				return InterfaceVal(ptr.(*interface{}))
 			},
-			input:  func() *interface{} { b := interface{}(42); return &b }(),
+			input:  func() *interface{} { i := interface{}(42); return &i }(),
 			output: 42,
+			valid:  true,
+		},
+		{
+			title: "test DurationVal providing `nil` pointer",
+			fn: func(ptr interface{}) (interface{}, bool) {
+				return DurationVal(ptr.(*time.Duration))
+			},
+			input:  func() *time.Duration { return nil }(),
+			output: time.Duration(0),
+			valid:  false,
+		},
+		{
+			title: "test DurationVal providing valid pointer",
+			fn: func(ptr interface{}) (interface{}, bool) {
+				return DurationVal(ptr.(*time.Duration))
+			},
+			input:  func() *time.Duration { d := time.Duration(42); return &d }(),
+			output: time.Duration(42),
+			valid:  true,
+		},
+		{
+			title: "test TimeVal providing `nil` pointer",
+			fn: func(ptr interface{}) (interface{}, bool) {
+				return TimeVal(ptr.(*time.Time))
+			},
+			input:  func() *time.Time { return nil }(),
+			output: time.Time{},
+			valid:  false,
+		},
+		{
+			title: "test TimeVal providing valid pointer",
+			fn: func(ptr interface{}) (interface{}, bool) {
+				return TimeVal(ptr.(*time.Time))
+			},
+			input:  func() *time.Time { t := time.Time{}; return &t }(),
+			output: time.Time{},
 			valid:  true,
 		},
 	}
