@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func Test_Pointer(t *testing.T) {
@@ -68,6 +69,61 @@ func Test_Pointer(t *testing.T) {
 			value:  int64(42),
 			fn:     func(v interface{}) interface{} { return Int64(v.(int64)) },
 			output: func() interface{} { i := int64(42); return &i }(),
+		},
+		{
+			value:  uintptr(42),
+			fn:     func(v interface{}) interface{} { return Uintptr(v.(uintptr)) },
+			output: func() interface{} { i := uintptr(42); return &i }(),
+		},
+		{
+			value:  float32(42),
+			fn:     func(v interface{}) interface{} { return Float32(v.(float32)) },
+			output: func() interface{} { i := float32(42); return &i }(),
+		},
+		{
+			value:  float64(42),
+			fn:     func(v interface{}) interface{} { return Float64(v.(float64)) },
+			output: func() interface{} { i := float64(42); return &i }(),
+		},
+		{
+			value:  rune(42),
+			fn:     func(v interface{}) interface{} { return Rune(v.(rune)) },
+			output: func() interface{} { i := rune(42); return &i }(),
+		},
+		{
+			value:  byte(42),
+			fn:     func(v interface{}) interface{} { return Byte(v.(byte)) },
+			output: func() interface{} { i := byte(42); return &i }(),
+		},
+		{
+			value:  "42",
+			fn:     func(v interface{}) interface{} { return String(v.(string)) },
+			output: func() interface{} { i := "42"; return &i }(),
+		},
+		{
+			value:  complex64(42),
+			fn:     func(v interface{}) interface{} { return Complex64(v.(complex64)) },
+			output: func() interface{} { i := complex64(42); return &i }(),
+		},
+		{
+			value:  complex128(42),
+			fn:     func(v interface{}) interface{} { return Complex128(v.(complex128)) },
+			output: func() interface{} { i := complex128(42); return &i }(),
+		},
+		{
+			value:  interface{}(42),
+			fn:     func(v interface{}) interface{} { return Interface(v) },
+			output: func() interface{} { i := interface{}(42); return &i }(),
+		},
+		{
+			value:  time.Duration(42),
+			fn:     func(v interface{}) interface{} { return Duration(v.(time.Duration)) },
+			output: func() interface{} { i := time.Duration(42); return &i }(),
+		},
+		{
+			value:  time.Time{},
+			fn:     func(v interface{}) interface{} { return Time(v.(time.Time)) },
+			output: func() interface{} { i := time.Time{}; return &i }(),
 		},
 	}
 
