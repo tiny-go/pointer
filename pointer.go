@@ -15,3 +15,14 @@ func Value[T any](ptr *T) (T, bool) {
 
 	return zeroValue, false
 }
+
+// Coalesce returns the first non-nil value in a list (or fallback value when all nils).
+func Coalesce[T any](fallback T, values ...*T) T {
+	for _, value := range values {
+		if value != nil {
+			return *value
+		}
+	}
+
+	return fallback
+}

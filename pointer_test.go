@@ -3,7 +3,7 @@ package pointer_test
 import (
 	"testing"
 
-	"github.com/tiny-go/pointer"
+	"github.com/tiny-go/pointer/v2"
 )
 
 func Test_New(t *testing.T) {
@@ -61,6 +61,20 @@ func Test_Value(t *testing.T) {
 			t.Errorf("`ok` was expected to be true")
 		}
 		if value != "foo" {
+			t.Errorf("unexpected value: %v", value)
+		}
+	})
+}
+
+func Test_Coalesce(t *testing.T) {
+	t.Run("From collection", func(t *testing.T) {
+		if value := pointer.Coalesce(1, nil, nil, pointer.New(42)); value != 42 {
+			t.Errorf("unexpected value: %v", value)
+		}
+	})
+
+	t.Run("Fallback", func(t *testing.T) {
+		if value := pointer.Coalesce(1, nil, nil, nil); value != 1 {
 			t.Errorf("unexpected value: %v", value)
 		}
 	})
