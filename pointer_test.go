@@ -65,3 +65,17 @@ func Test_Value(t *testing.T) {
 		}
 	})
 }
+
+func Test_Coalesce(t *testing.T) {
+	t.Run("From collection", func(t *testing.T) {
+		if value := pointer.Coalesce(1, nil, nil, pointer.New(42)); value != 42 {
+			t.Errorf("unexpected value: %v", value)
+		}
+	})
+
+	t.Run("Fallback", func(t *testing.T) {
+		if value := pointer.Coalesce(1, nil, nil, nil); value != 1 {
+			t.Errorf("unexpected value: %v", value)
+		}
+	})
+}
